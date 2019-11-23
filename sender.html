@@ -8,6 +8,7 @@
     <input type="password" id="password" placeholder="Password">
     <br>
 
+    <p id="status"></p>
     <button onclick="login()">Login</button>
     <br>
     <br>
@@ -55,14 +56,24 @@ function login() {
     }),
     headers: { "Content-Type": "application/json" }
   }).then(function(response) {
-    return response.json();
+    try {
+        return response.json();
+    } catch(e) {
+        return response.text();
+    }
   }).then(function(data) {
-      document.getElementById("logout").style.display = 'none';
-      document.getElementById("login").style.display = null;
-    
-      document.getElementById("login").innerHTML = `Logged in as <code>${data.user.email}</code>`;
-    
-      socket.params.key = data.accessToken
+
+      if(typeof data == "object") {
+
+        document.getElementById("logout").style.display = 'none';
+        document.getElementById("login").style.display = null;
+        
+        document.getElementById("login").innerHTML = `Logged in as <code>${data.user.email}</code>`;
+        
+        socket.params.key = data.accessToken
+      } else {
+        document.getElementById("status") == data;
+      }
   });
 }
 
