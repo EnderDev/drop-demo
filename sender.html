@@ -65,7 +65,7 @@ function login() {
 
         console.log(data)
 
-        if(typeof(data) != 'string') {
+        if(typeof(data) == 'object') {
             document.getElementById("logout").style.display = 'none';
             document.getElementById("login").style.display = null;
             
@@ -74,7 +74,7 @@ function login() {
             socket.params.key = data.accessToken
         }
         if(typeof(data) == 'string') {
-            document.getElementById("status").innerText == data;
+            document.getElementById("status").innerHTML == `${data}`;
         }
   });
 }
