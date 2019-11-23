@@ -56,12 +56,10 @@ function login() {
     }),
     headers: { "Content-Type": "application/json" }
   }).then(function(response) {
-    if(response.type == 'application/json') {
-        return response.json();
-    } else {
-        return response.text();
-    }
+        return response.text()
   }).then(function(data) {
+
+        console.log(data)
 
         document.getElementById("status").innerHTML == `${data}`;
 
