@@ -1,1 +1,64 @@
+<div id="logout">
+    <input type="email" id="email" placeholder="Email">
+    <br>
+    <input type="password" id="password" placeholder="Password">
+    <br>
 
+    <button onclick="login()">Login</button>
+    <br>
+    <br>
+</div>
+
+<div id="login" style="display: none"></div>
+
+<button onclick="window.location.reload()">Refresh</button>
+<button onclick="ws()">Start connection</button>
+
+<style>
+body {
+  margin: 400px auto;
+  text-align: center;
+  width: 400px;
+}
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 20px;
+  margin-bottom: 8px
+}
+</style>
+
+<script>
+socket = {
+    params: {
+      key: ''
+    }
+  }
+
+function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  
+  fetch('http://localhost:3000/api/login', {
+    method: 'post',
+    body: JSON.stringify({
+      email,
+      password
+    }),
+    headers: { "Content-Type": "application/json" }
+  }).then(function(response) {
+    return response.json();
+  }).then(function(data) {
+      document.getElementById("logout").style.display = 'none';
+      document.getElementById("login").style.display = null;
+    
+      document.getElementById("login").innerHTML = `Logged in as <code>${data.user.email}</code>`;
+    
+      socket.params.key = data.accessToken
+  });
+}
+
+function ws() {
+  socket.connection = new WebSocket(`ws://localhost:3000/api/devices/messages?auth=${socket.params.key}`, "protocolOne"); 
+}
+</script>
