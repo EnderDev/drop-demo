@@ -72,7 +72,8 @@ function login() {
             document.getElementById("login").innerHTML = `Logged in as <code>${data.user.email}</code>`;
             
             socket.params.key = data.accessToken
-        } else {
+        }
+        if(typeof(data) == 'string') {
             document.getElementById("status").innerText == data;
         }
   });
