@@ -63,6 +63,8 @@ function login() {
     }
   }).then(function(data) {
 
+        console.log(data)
+
         if(typeof(data) != 'string') {
             document.getElementById("logout").style.display = 'none';
             document.getElementById("login").style.display = null;
