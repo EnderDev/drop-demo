@@ -63,19 +63,15 @@ function login() {
     }
   }).then(function(data) {
 
-        console.log(data)
+        document.getElementById("status").innerHTML == `${data}`;
 
-        if(typeof(data) == 'object') {
-            document.getElementById("logout").style.display = 'none';
-            document.getElementById("login").style.display = null;
-            
-            document.getElementById("login").innerHTML = `Logged in as <code>${data.user.email}</code>`;
-            
-            socket.params.key = data.accessToken
-        }
-        if(typeof(data) == 'string') {
-            document.getElementById("status").innerHTML == `${data}`;
-        }
+        document.getElementById("logout").style.display = 'none';
+        document.getElementById("login").style.display = null;
+        
+        document.getElementById("login").innerHTML = `Logged in as <code>${data.user.email}</code>`;
+        
+        socket.params.key = data.accessToken
+
   });
 }
 
